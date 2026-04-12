@@ -4,10 +4,23 @@
 
 :root {
   --blue: #a2cef0;
-  --blueGreen: #33ab9d;
+  --darkerBlue: #719cbd;
+  --blueGreen: #58afa5;
 }
 
 @theme {
   --color-brand-100: var(--blue);
   --color-brand-200: var(--blueGreen);
+}
+
+.row {
+  @apply max-w-7xl mx-auto;
+}
+
+.container {
+  @apply mx-auto;
+}
+
+body {
+  @apply bg-gradient-to-bl from-[#a2cef0] via-[#719cbd] to-[#58afa5];
 }
