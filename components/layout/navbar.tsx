@@ -11,6 +11,7 @@ import {
   LogOut,
   Menu,
   X,
+  BarChart3,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import Login from "../../public/img/login/person.webp";
@@ -19,6 +20,7 @@ const navItems = [
   { href: "/protected/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/protected/extratos", label: "Extratos", icon: FileText },
   { href: "/protected/importar", label: "Importar PDF", icon: FileUp },
+  { href: "/protected/graficos", label: "Gráficos", icon: BarChart3 },
 ];
 
 export default function Navbar() {
