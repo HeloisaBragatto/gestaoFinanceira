@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
-// ── Tipos ─────────────────────────────────────────────────────
-
 type Transacao = {
   tipo: "pagamento" | "recebimento";
   descricao: string;
@@ -11,7 +9,7 @@ type Transacao = {
   data_transacao: string;
 };
 
-// ── Extração de texto do PDF ──────────────────────────────────
+// Extração de texto do PDF
 
 async function extrairTextoPdf(buffer: Buffer): Promise<string> {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -21,46 +19,94 @@ async function extrairTextoPdf(buffer: Buffer): Promise<string> {
   return data.text ?? "";
 }
 
-// ── Categorização ─────────────────────────────────────────────
+// Categorização
 
 function inferirCategoria(desc: string): string {
   const d = desc.toLowerCase();
-  if (d.match(/salário|salario|holerite/)) return "salário";
+
+  // RECEITA
   if (
     d.match(
-      /mercado|supermercado|padaria|açougue|hortifruti|ifood|rappi|burger|pizza|restaurante/
+      /salário|salario|holerite|freelance|pagamento recebido|renda|bonus|bônus|comissão|comissao/
+    )
+  )
+    return "salário";
+
+  // ALIMENTAÇÃO
+  if (
+    d.match(
+      /mercado|supermercado|padaria|açougue|hortifruti|ifood|rappi|uber eats|burger|pizza|restaurante|lanchonete|café|cafe|bar/
     )
   )
     return "alimentação";
+
+  // TRANSPORTE
   if (
     d.match(
-      /uber|99|taxi|posto|combustível|combustivel|estacionamento|ônibus|onibus|metrô|metro/
+      /uber|99|taxi|posto|combustível|combustivel|gasolina|etanol|diesel|estacionamento|ônibus|onibus|metrô|metro|passagem|transporte/
     )
   )
     return "transporte";
+
+  // SAÚDE
   if (
     d.match(
-      /farmácia|farmacia|hospital|médico|medico|plano de saúde|unimed|drogaria/
+      /farmácia|farmacia|hospital|médico|medico|consulta|exame|plano de saúde|unimed|drogaria|remédio|remedio/
     )
   )
     return "saúde";
+
+  // LAZER
   if (
     d.match(
-      /netflix|spotify|amazon|disney|youtube|prime|hbo|assinatura|ingresso/
+      /netflix|spotify|amazon|disney|youtube|prime|hbo|assinatura|ingresso|cinema|show|evento|viagem|hotel|airbnb/
     )
   )
     return "lazer";
+
+  // MORADIA
   if (
     d.match(
-      /aluguel|condomínio|condominio|iptu|energia|água|agua|gás|gas|internet|telefone|celular/
+      /aluguel|condomínio|condominio|iptu|energia|luz|água|agua|gás|gas|internet|telefone|celular|conta/
     )
   )
     return "moradia";
-  if (d.match(/transferência|transferencia|pix|ted|doc/))
+
+  // TRANSFERÊNCIAS
+  if (d.match(/transferência|transferencia|pix|ted|doc|envio|recebido de/))
     return "transferência";
-  if (d.match(/shopping|loja|magazine|americanas|renner|zara|hm|marisa/))
+
+  // COMPRAS (GERAL)
+  if (
+    d.match(
+      /shopping|loja|magazine|americanas|renner|zara|hm|marisa|compra|pedido/
+    )
+  )
     return "compras";
-  if (d.match(/tim|claro|vivo|oi|net|sky/)) return "moradia";
+
+  // EDUCAÇÃO
+  if (
+    d.match(
+      /faculdade|escola|curso|udemy|alura|mensalidade|matrícula|matricula|educação|educacao/
+    )
+  )
+    return "educação";
+
+  // SERVIÇOS FINANCEIROS
+  if (d.match(/juros|taxa|tarifa|anuidade|banco|manutenção|manutencao|saque/))
+    return "financeiro";
+
+  // TECNOLOGIA / SOFTWARE
+  if (
+    d.match(
+      /google|apple|microsoft|github|aws|azure|domínio|dominio|hosting|servidor/
+    )
+  )
+    return "tecnologia";
+
+  // TELECOM (mantive separado pra você poder mudar depois se quiser)
+  if (d.match(/tim|claro|vivo|oi|sky/)) return "telecom";
+
   return "outro";
 }
 
@@ -86,7 +132,7 @@ function normalizarData(str: string): string | null {
   return null;
 }
 
-// ── Parser: comprovante de transação única (Inter, Nubank etc) ─
+// Parser: comprovante de transação única (Inter, Nubank etc)
 
 function parsearComprovante(texto: string): Transacao | null {
   const linhas = texto
@@ -155,7 +201,7 @@ function parsearComprovante(texto: string): Transacao | null {
   };
 }
 
-// ── Parser: extrato com múltiplas transações ──────────────────
+// Parser: extrato com múltiplas transações
 
 function parsearExtrato(texto: string): Transacao[] {
   const linhas = texto
@@ -208,7 +254,7 @@ function parsearExtrato(texto: string): Transacao[] {
   return transacoes;
 }
 
-// ── Decide qual parser usar ───────────────────────────────────
+//  Decide qual parser usar
 
 function parsearTransacoes(texto: string): Transacao[] {
   const textoLower = texto.toLowerCase();
@@ -232,7 +278,7 @@ function parsearTransacoes(texto: string): Transacao[] {
   return parsearExtrato(texto);
 }
 
-// ── Route Handler ─────────────────────────────────────────────
+//  Route Handler
 
 export async function POST(req: NextRequest) {
   try {
