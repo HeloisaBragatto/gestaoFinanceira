@@ -4,6 +4,8 @@
 // import { FetchDataSteps } from "@/components/tutorial/fetch-data-steps";
 // import { Suspense } from "react";
 
+import DashboardFinanceiro from "./graficos/page";
+
 // async function UserDetails() {
 //   const supabase = await createClient();
 //   const { data, error } = await supabase.auth.getClaims();
@@ -16,5 +18,9 @@
 // }
 
 export default function ProtectedPage() {
-  return <div className="flex-1 w-full flex flex-col gap-12"></div>;
+  return (
+    <div className="flex-1 w-full flex flex-col gap-12">
+      <DashboardFinanceiro />
+    </div>
+  );
 }
