@@ -19,7 +19,7 @@ import Login from "../../public/img/login/person.webp";
 const navItems = [
   { href: "/protected/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/protected/extratos", label: "Extratos", icon: FileText },
-  { href: "/protected/importar", label: "Importar PDF", icon: FileUp },
+  { href: "/protected/importar", label: "Importar dados", icon: FileUp },
   { href: "/protected/graficos", label: "Gráficos", icon: BarChart3 },
 ];
 
@@ -66,11 +66,11 @@ export default function Navbar() {
       <nav
         className="
         hidden lg:flex group
-        w-16 hover:w-[15%]
+        w-16 hover:w-fit max-w-lg
         h-full min-h-screen
         flex-col justify-between
         px-3 py-4
-        bg-white/50 backdrop-blur-sm
+        bg-white border-r border-slate-200 backdrop-blur-sm
         rounded-r-md
         transition-all duration-300
         overflow-hidden shrink-0
@@ -78,60 +78,68 @@ export default function Navbar() {
       "
       >
         {/* Topo: avatar + nome + links */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col justify-between gap-6">
           {/* Avatar + nome */}
           <div className="flex items-center gap-3">
             {avatar}
-            <span className="text-sm text-black font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <span className="text-sm text-black font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300">
               Olá, {firstName}!
             </span>
           </div>
-
-          {/* Links */}
-          <ul className="flex flex-col gap-1">
-            {navItems.map(({ href, label, icon: Icon }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className={`flex items-center gap-3 px-2 py-2.5 rounded-md transition-colors ${
-                    isActive(href)
-                      ? "bg-[#a2cef0] text-white"
-                      : "hover:bg-white/20 text-gray-700"
-                  }`}
-                >
-                  <Icon size={20} className="shrink-0" />
-                  <span className="text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    {label}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="space-y-2 mt-5">
+            <p
+              className={`opacity-0 group-hover:opacity-100 text-gray-500 uppercase text-xs transition-all duration-300`}
+            >
+              Principal
+            </p>
+            {/* Links */}
+            <ul className="flex flex-col my-auto gap-1">
+              {navItems.map(({ href, label, icon: Icon }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-md transition-all duration-300 ${
+                      isActive(href)
+                        ? "bg-brand-darkBlue text-white"
+                        : "text-gray-900 hover:bg-brand-darkBlue/80 hover:text-white"
+                    }`}
+                  >
+                    <Icon size={20} className="shrink-0 text-current" />
+                    <span className="text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      {label}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-
-        {/* Botão sair */}
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-3 px-2 py-2.5 rounded-md hover:bg-white/30 text-gray-700 hover:text-black transition-colors w-full"
-        >
-          <LogOut size={20} className="shrink-0" />
-          <span className="text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            Sair
-          </span>
-        </button>
+        <div>
+          <hr className="my-1" />
+          {/* Botão sair */}
+          <button
+            onClick={handleLogout}
+            className={`flex items-center gap-3 mb-10 px-2 py-2.5 rounded-md hover:bg-brand-darkBlue text-gray-900 hover:text-white transition-all duration-300 w-full `}
+          >
+            <LogOut size={20} className="shrink-0" />
+            <span className="text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300">
+              Sair
+            </span>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile */}
       <div className="lg:hidden w-full absolute top-0 left-0 right-0 z-50">
         {/* Topbar */}
-        <div className="flex items-center justify-between px-4 py-3 bg-white/50 text-black backdrop-blur-sm">
+        <div className="flex items-center justify-between px-4 py-3 bg-white/50 text-gray-900 backdrop-blur-sm">
           <div className="flex items-center gap-2">
             {avatar}
             <span className="text-sm font-medium">Olá, {firstName}!</span>
           </div>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 rounded-md hover:bg-[#a2cef0]/40 transition-colors"
+            className="p-2 rounded-md hover:bg-brand-darkBlue/10 transition-all duration-300"
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -148,13 +156,13 @@ export default function Navbar() {
                 key={href}
                 href={href}
                 onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-3 px-3 py-3 rounded-md transition-colors ${
+                className={`flex items-center gap-3 px-3 py-3 rounded-md transition-all duration-300 ${
                   isActive(href)
-                    ? "bg-[#a2cef0] text-black"
-                    : "hover:bg-[#a2cef0]/40 text-gray-700"
+                    ? "bg-brand-darkBlue/10 text-gray-900"
+                    : "text-gray-900 hover:bg-brand-darkBlue hover:text-white"
                 }`}
               >
-                <Icon size={20} />
+                <Icon size={20} className="shrink-0 text-current" />
                 <span className="text-sm font-medium">{label}</span>
               </Link>
             ))}
@@ -163,7 +171,7 @@ export default function Navbar() {
 
             <button
               onClick={handleLogout}
-              className="flex items-center gap-3 px-3 py-3 rounded-md hover:bg-red-100 text-gray-700 hover:text-red-600 transition-colors"
+              className="flex items-center gap-3 px-3 py-3 rounded-md hover:bg-red-100 text-gray-700 hover:text-red-600 transition-all duration-300"
             >
               <LogOut size={20} />
               <span className="text-sm font-medium">Sair</span>

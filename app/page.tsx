@@ -1,24 +1,22 @@
 import { EnvVarWarning } from "@/components/env-var-warning";
-import { AuthButton } from "@/components/auth-button";
 import { hasEnvVars } from "@/lib/utils";
-import { Suspense } from "react";
+import LoginPageFeed from "@/components/feed/first/login-page-feed";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    redirect("/protected");
+  }
+
   return (
-    <main className="min-h-screen flex flex-col items-center bg-gradient-to-br from-brand-100 to-brand-200">
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-5xl flex justify-end items-center p-3 px-5 text-sm">
-            {!hasEnvVars ? (
-              <EnvVarWarning />
-            ) : (
-              <Suspense>
-                <AuthButton />
-              </Suspense>
-            )}
-          </div>
-        </nav>
-      </div>
+    <main className="h-screen flex flex-col">
+      {!hasEnvVars ? <EnvVarWarning /> : <LoginPageFeed />}
     </main>
   );
 }
