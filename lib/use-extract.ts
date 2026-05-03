@@ -34,10 +34,11 @@ export const CATEGORIAS = [
   "outro",
 ];
 
+const supabase = createClient();
+
 export function useExtratos() {
   const [extratos, setExtratos] = useState<Extrato[]>([]);
   const [loading, setLoading] = useState(true);
-  const supabase = createClient();
 
   const fetchExtratos = useCallback(async () => {
     setLoading(true);
