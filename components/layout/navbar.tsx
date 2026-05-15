@@ -71,7 +71,7 @@ export default function Navbar() {
         flex-col justify-between
         px-3 py-4
         bg-white border-r border-slate-200 backdrop-blur-sm
-        rounded-r-md
+        rounded-r-md shadow-sm
         transition-all duration-300
         overflow-hidden shrink-0
         sticky top-0

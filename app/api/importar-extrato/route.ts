@@ -10,7 +10,6 @@ type Transacao = {
 };
 
 // Extração de texto do PDF
-
 async function extrairTextoPdf(buffer: Buffer): Promise<string> {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const pdfParse = require("pdf-parse");
@@ -20,7 +19,6 @@ async function extrairTextoPdf(buffer: Buffer): Promise<string> {
 }
 
 // Categorização
-
 function inferirCategoria(desc: string): string {
   const d = desc.toLowerCase();
 
@@ -111,7 +109,6 @@ function inferirCategoria(desc: string): string {
 }
 
 // ── Normaliza valor: "R$ 70,99" → 70.99 ──────────────────────
-
 function normalizarValor(str: string): number | null {
   const match = str.match(/([\d]{1,3}(?:\.[\d]{3})*(?:,[\d]{2}))/);
   if (!match) return null;
@@ -120,7 +117,6 @@ function normalizarValor(str: string): number | null {
 }
 
 // ── Normaliza data para YYYY-MM-DD ────────────────────────────
-
 function normalizarData(str: string): string | null {
   // DD/MM/YYYY ou DD/MM/YY
   const m1 = str.match(/\b(\d{2})\/(\d{2})\/(\d{2,4})\b/);

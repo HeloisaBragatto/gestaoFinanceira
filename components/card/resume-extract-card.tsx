@@ -13,15 +13,15 @@ export function ResumoCards({
   const saldo = totalRecebimentos - totalPagamentos;
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {/* Receitas */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm px-5 py-4 flex items-center justify-between">
+      <div className="w-fit md:w-full bg-white rounded-xl border border-gray-200 shadow-sm px-5 py-4 flex flex-col-reverse md:flex-row md:items-center justify-between">
         <div>
           <p className="text-sm text-gray-500 mb-1">Receitas</p>
           <p className="text-2xl font-bold text-[#021A49]">
             {formatarValor(totalRecebimentos)}
           </p>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-gray-400 mt-1 text-pretty">
             + 0% em relação ao período anterior
           </p>
         </div>
@@ -31,13 +31,13 @@ export function ResumoCards({
       </div>
 
       {/* Despesas */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm px-5 py-4 flex items-center justify-between">
+      <div className="w-fit md:w-full bg-white rounded-xl border border-gray-200 shadow-sm px-5 py-4 flex flex-col-reverse md:flex-row md:items-center justify-between">
         <div>
           <p className="text-sm text-gray-500 mb-1">Despesas</p>
           <p className="text-2xl font-bold text-[#021A49]">
             {formatarValor(totalPagamentos)}
           </p>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-gray-400 mt-1 text-pretty">
             + 0% em relação ao período anterior
           </p>
         </div>
@@ -47,7 +47,7 @@ export function ResumoCards({
       </div>
 
       {/* Saldo */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm px-5 py-4 flex items-center justify-between">
+      <div className="w-fit md:w-full bg-white rounded-xl border border-gray-200 shadow-sm px-5 py-4 flex flex-col-reverse md:flex-row md:items-center justify-between">
         <div>
           <p className="text-sm text-gray-500 mb-1">Saldo</p>
           <p
@@ -55,7 +55,7 @@ export function ResumoCards({
           >
             {formatarValor(saldo)}
           </p>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-gray-400 mt-1 text-pretty">
             + 0% em relação ao período anterior
           </p>
         </div>

@@ -104,7 +104,7 @@ export function useImportar() {
         `${data.transacoes.length} transações encontradas e salvas com sucesso!`
       );
 
-      setTimeout(() => router.push("/protected/extratos"), 2500);
+      //setTimeout(() => router.push("/protected/extratos"), 2500);
     } catch (err: unknown) {
       setStatus("error");
       setMensagem(err instanceof Error ? err.message : "Erro inesperado.");

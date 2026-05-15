@@ -96,7 +96,7 @@ export function TabelaExtratos({
     onEditFormChange({ ...editForm, [key]: value });
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-x-scroll md:overflow-hidden">
       {/* Cabeçalho da tabela */}
       <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
         <h3 className="text-sm font-semibold text-gray-900">Movimentações</h3>
@@ -105,8 +105,8 @@ export function TabelaExtratos({
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+      <div className="">
+        <table className="w-full text-sm ">
           <thead>
             <tr className="border-b border-gray-100 bg-gray-50/60">
               <th className="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">
