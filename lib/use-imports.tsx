@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 export type Status = "idle" | "loading" | "success" | "error";
 
@@ -39,7 +39,7 @@ export function useImportar() {
   const [status, setStatus] = useState<Status>("idle");
   const [mensagem, setMensagem] = useState("");
   const [transacoes, setTransacoes] = useState<Transacao[]>([]);
-  const router = useRouter();
+  // const router = useRouter();
 
   const isImagem = file
     ? ["image/jpeg", "image/png", "image/webp"].includes(file.type)
