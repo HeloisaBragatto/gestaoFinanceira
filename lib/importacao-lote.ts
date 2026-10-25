@@ -81,7 +81,6 @@ export type ProcessadorArquivo<T> = (
  * Processa os arquivos UM POR VEZ, na ordem (o OCR é pesado e a detecção de
  * duplicadas precisa enxergar o que o arquivo anterior acabou de salvar).
  * Um erro num arquivo não interrompe os demais, e arquivos já importados
- * ("ok") não são reenviados numa nova tentativa.
  */
 export async function processarLote<T extends ArquivoLike>(opcoes: {
   arquivos: T[];
