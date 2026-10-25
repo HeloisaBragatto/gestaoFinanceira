@@ -1,4 +1,4 @@
-import DashboardFinanceiro from "./graficos/page";
+import DashboardFinanceiro from "@/components/dashboard/dashboard-financeiro";
 
 export default function ProtectedPage() {
   return (

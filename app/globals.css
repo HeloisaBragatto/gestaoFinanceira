@@ -91,3 +91,7 @@ select:-webkit-autofill {
 
   transition: background-color 9999s ease-in-out 0s;
 }
+
+.btn-darkBlue {
+  @apply flex items-center gap-2 bg-brand-darkBlue border border-slate-200 px-4 py-2 rounded-lg shadow-sm hover:bg-brand-darkBlue/90 transition-all text-sm font-medium;
+}

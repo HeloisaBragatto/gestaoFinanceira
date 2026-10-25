@@ -12,6 +12,7 @@ import {
   Menu,
   X,
   BarChart3,
+  PiggyBank,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import Login from "../../public/img/login/person.webp";
@@ -21,6 +22,7 @@ const navItems = [
   { href: "/protected/extratos", label: "Extratos", icon: FileText },
   { href: "/protected/importar", label: "Importar dados", icon: FileUp },
   { href: "/protected/graficos", label: "Gráficos", icon: BarChart3 },
+  { href: "/protected/metas", label: "Metas", icon: PiggyBank },
 ];
 
 export default function Navbar() {

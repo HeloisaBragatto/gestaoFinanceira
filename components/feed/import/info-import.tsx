@@ -3,8 +3,8 @@ import { Info } from "lucide-react";
 const PASSOS = [
   {
     num: 1,
-    titulo: "Selecione o arquivo",
-    desc: "PDF do banco ou foto do extrato (JPG, PNG)",
+    titulo: "Selecione os arquivos",
+    desc: "Um ou vários PDFs do banco ou fotos dos extratos (JPG, PNG)",
   },
   {
     num: 2,
@@ -38,8 +38,8 @@ export function InfoImportar() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-start gap-3 bg-blue-50 border border-blue-100 rounded-xl px-4 py-3">
-        <Info size={15} className="text-darkBlue mt-0.5 shrink-0" />
-        <p className="text-xs text-gray-700 leading-relaxed">
+        <Info size={15} className="text-brand-darkBlue mt-0.5 shrink-0" />
+        <p className="text-xs text-pretty text-gray-700 leading-relaxed">
           Para melhores resultados, use o{" "}
           <strong>PDF gerado pelo seu banco</strong>. Imagens são processadas
           com OCR automaticamente.
@@ -53,12 +53,14 @@ export function InfoImportar() {
         <div className="flex flex-col gap-3">
           {PASSOS.map((p) => (
             <div key={p.num} className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-darkBlue text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+              <div className="w-6 h-6 rounded-full bg-darkBlue text-brand-darkBlue flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
                 {p.num}
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-900">{p.titulo}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{p.desc}</p>
+                <p className="text-xs text-pretty text-gray-500 mt-0.5">
+                  {p.desc}
+                </p>
               </div>
             </div>
           ))}

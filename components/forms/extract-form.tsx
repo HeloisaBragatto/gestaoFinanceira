@@ -1,7 +1,7 @@
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CATEGORIAS, Extrato } from "@/lib/use-extract";
+import { CATEGORIAS, Extrato } from "@/lib/finance/types";
 
 interface ExtratoFormProps {
   form: Partial<Extrato>;
@@ -22,11 +22,10 @@ export function ExtratoForm({
     onChange({ ...form, [key]: value });
 
   if (!isNovo) {
-    // Modo edição inline na tabela
     return null;
   }
 
-  // Modo adicionar — painel acima da tabela
+  // Modo adicionar
   return (
     <div className="bg-white rounded-xl border border-[#021A49]/20 shadow-sm px-5 py-4">
       <p className="text-sm font-semibold text-gray-900 mb-4">Nova transação</p>
@@ -77,7 +76,12 @@ export function ExtratoForm({
             min="0"
             step="0.01"
             value={form.valor ?? ""}
-            onChange={(e) => set("valor", e.target.value === "" ? "" : parseFloat(e.target.value))}
+            onChange={(e) =>
+              set(
+                "valor",
+                e.target.value === "" ? "" : parseFloat(e.target.value)
+              )
+            }
             className="text-sm w-28 border-gray-200 bg-gray-50 focus:border-[#021A49]"
           />
         </div>

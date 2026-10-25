@@ -11,7 +11,7 @@ export function FeedbackStatus({ status, mensagem }: FeedbackStatusProps) {
 
   return (
     <div
-      className={`flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm font-medium ${
+      className={`flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm font-medium text-balance ${
         status === "loading"
           ? "bg-blue-50 text-blue-700 border border-blue-100"
           : status === "success"

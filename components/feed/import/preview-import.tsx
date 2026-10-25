@@ -1,4 +1,4 @@
-import { Transacao } from "@/lib/use-imports";
+import { Transacao } from "@/lib/importacao-lote";
 
 interface PreviewTransacoesProps {
   transacoes: Transacao[];
@@ -21,7 +21,7 @@ export function PreviewTransacoes({ transacoes }: PreviewTransacoesProps) {
         <span className="text-sm font-semibold text-gray-900">
           Transações encontradas
         </span>
-        <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200">
+        <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200 whitespace-nowrap">
           ✓ {transacoes.length} encontradas
         </span>
       </div>
