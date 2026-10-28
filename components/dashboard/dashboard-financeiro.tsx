@@ -143,7 +143,7 @@ export default function DashboardFinanceiro() {
                 </div>
               ) : (
                 <>
-                  <DashboardGraphic />
+                  <DashboardGraphic extratos={extratos} />
                 </>
               )}
             </div>

@@ -8,7 +8,7 @@ import { evolucaoMensal, totaisPorCategoria } from "@/lib/finance/calculos";
 import type { Extrato } from "@/lib/finance/types";
 
 import { CORES_CATEGORIA } from "@/lib/graficos";
-import { formatarValor, useExtratos } from "@/lib/use-extract";
+import { formatarValor } from "@/lib/use-extract";
 
 import {
   CartesianGrid,
@@ -120,8 +120,12 @@ function usePieData(extratos: Extrato[]) {
 
 // ── Componente principal ──────────────────────────────────────
 
-export default function DashboardGraphic() {
-  const { extratos } = useExtratos();
+export default function DashboardGraphic({
+  extratos,
+}: {
+  extratos: Extrato[];
+}) {
+  // const { extratos } = useExtratos();
 
   const lineData = useLineData(extratos);
   const pieData = usePieData(extratos);

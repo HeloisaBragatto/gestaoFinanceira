@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { buscarTodosExtratos } from "@/lib/finance/consulta";
+import { FILTROS_INICIAIS, isDataValida } from "@/lib/finance/filtros";
+import { removerDuplicadas } from "@/lib/finance/duplicadas";
 
 type Transacao = {
   tipo: "pagamento" | "recebimento";
@@ -326,9 +329,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const transacoes = parsearTransacoes(texto);
+    // Descarta transações com data impossível (ex.: 99/99/2026), que o banco recusaria.
+    const transacoesLidas = parsearTransacoes(texto).filter((t) =>
+      isDataValida(t.data_transacao)
+    );
 
-    if (transacoes.length === 0) {
+    if (transacoesLidas.length === 0) {
       return NextResponse.json(
         {
           error:
@@ -336,6 +342,26 @@ export async function POST(req: NextRequest) {
         },
         { status: 422 }
       );
+    }
+
+    // Evita duplicar movimentações já cadastradas (ex.: reimportar o mesmo extrato).
+    const datas = transacoesLidas.map((t) => t.data_transacao).sort();
+    const existentes = await buscarTodosExtratos(
+      supabase,
+      {
+        ...FILTROS_INICIAIS,
+        dataInicio: datas[0],
+        dataFim: datas[datas.length - 1],
+      },
+      { userId: user.id, colunas: "id,tipo,descricao,valor,data_transacao" }
+    );
+    const { unicas: transacoes, ignoradas } = removerDuplicadas(
+      transacoesLidas,
+      existentes
+    );
+
+    if (transacoes.length === 0) {
+      return NextResponse.json({ transacoes: [], duplicadas: ignoradas });
     }
 
     const { data: pdfImportado, error: pdfError } = await supabase
@@ -386,7 +412,7 @@ export async function POST(req: NextRequest) {
       .update({ status: "concluido" })
       .eq("id", pdfImportado.id);
 
-    return NextResponse.json({ transacoes });
+    return NextResponse.json({ transacoes, duplicadas: ignoradas });
   } catch (err: unknown) {
     console.error("Erro na importação:", err);
     return NextResponse.json(
